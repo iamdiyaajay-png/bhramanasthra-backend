@@ -1,0 +1,86 @@
+{
+  "investigation_id": "INV-2026-KER-005",
+  "study_area_id": "kerala-floods-2018",
+  "study_area_name": "Kerala Flood Basin (Periyar River)",
+  "bounding_box": [
+    76.15,
+    9.9,
+    76.55,
+    10.3
+  ],
+  "crs": "EPSG:4326",
+  "phenomenon_type": "flood",
+  "expected_behavior": "receding",
+  "data_tier": "Tier 1 (Core)",
+  "data_source": "Copernicus Sentinel-1 SAR via NASA/ESA Gateway",
+  "data_provenance": "ILLUSTRATIVE \u2014 NOT REAL DATA",
+  "satellite_mission": "Sentinel-1A",
+  "sensor": "C-SAR",
+  "mode": "IW",
+  "polarization": [
+    "VV",
+    "VH"
+  ],
+  "orbit_direction": "DESCENDING",
+  "track": 144,
+  "reference_acquisition_id": "S1A_IW_GRDH_1SDV_20180808T004018_20180808T004043_023147_028448_F722",
+  "reference_acquisition_date": "2018-08-08",
+  "comparison_acquisition_id": "S1A_IW_GRDH_1SDV_20180816T004019_20180816T004044_023264_028821_A812",
+  "comparison_acquisition_date": "2018-08-16",
+  "later_acquisition_dates": [
+    "2018-08-28",
+    "2018-09-09",
+    "2018-09-21",
+    "2018-10-03",
+    "2018-10-15"
+  ],
+  "valid_later_acquisitions_count": 4,
+  "detected_later_acquisitions_count": 0,
+  "excluded_acquisitions": [
+    {
+      "acquisition_id": "S1A_IW_GRDH_1SDV_20181015T004022_20181015T004047_024139_02A2EC_9F01",
+      "date": "2018-10-15",
+      "reason": "High radar noise / severe ionospheric scintillation"
+    }
+  ],
+  "processing_method": "Sentinel-1 Dual-Pol Amplitude Ratio & Coherence Change Detection (SAR Beat Test)",
+  "processing_parameters": {
+    "polarization": "VV",
+    "speckle_filter": "Lee",
+    "filter_window": 7,
+    "detection_threshold_db": -3.5,
+    "beat_test_threshold_percent": 15.0
+  },
+  "change_detection_status": "PENDING",
+  "changed_area_sq_km": null,
+  "layer_references": null,
+  "beat_test_status": "NOT_YET_PROCESSED",
+  "beat_test_result": "NOT_AVAILABLE",
+  "persistence_result": "NOT_AVAILABLE",
+  "confounder_flags": [
+    "CLEAR"
+  ],
+  "evidence_label": "Unverified",
+  "reasons_for_label": [
+    "Investigation created and recorded in Evidence Ledger.",
+    "Awaiting SAR processing pipeline execution from Member 1.",
+    "Beat Test temporal evolution has not yet run on post-event satellite passes.",
+    "Data provenance is strictly disclosed as ILLUSTRATIVE \u2013 NOT REAL DATA."
+  ],
+  "independent_reference": null,
+  "verification_status": "UNVERIFIED",
+  "known_limitations": [
+    "Radar speckle noise requires multi-look adaptive filtering.",
+    "Wind roughening over open water can induce backscatter variance.",
+    "Ground truth validation has not yet been ingested.",
+    "Current demonstration uses illustrative Sentinel-1 metadata."
+  ],
+  "reproduce_command": "python -m bhandmisntra.pipeline --study-area kerala-floods-2018 --ref 2018-08-08 --cmp 2018-08-16 --track 144 --orbit DESCENDING",
+  "configuration_hash": "3ea43d94b5c99c3fc361640f08886fbf4415ab80a48b6151eb52a24e74c1d0b5",
+  "environment": {
+    "python_version": "3.12.10",
+    "platform": "BHnMISnTRA-FastAPI-v1.0.0",
+    "engine": "Gemini 3.8 Flash High Architecture"
+  },
+  "created_at": "2026-11-14T11:25:34Z"
+}

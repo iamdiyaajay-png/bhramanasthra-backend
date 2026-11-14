@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "investigation_id": "INV-2026-KER-002",
+    "layer": "comparison",
+    "layer_name": "Event Peak Post-Change SAR Acquisition (2018-08-16)",
+    "acquisition_id": "S1A_IW_GRDH_1SDV_20180816T004019_20180816T004044_023264_028821_A812",
+    "acquisition_date": "2018-08-16",
+    "mission": "Sentinel-1A",
+    "sensor": "C-SAR",
+    "mode": "IW",
+    "polarization": ["VV", "VH"],
+    "orbit_direction": "DESCENDING",
+    "track": 144,
+    "crs": "EPSG:4326",
+    "bounding_box": [76.15, 9.90, 76.55, 10.30],
+    "mean_vv_db": -14.6,
+    "data_provenance": "ILLUSTRATIVE — NOT REAL DATA",
+    "scientific_disclaimer": "Demonstration comparison observation footprint for NASA Space Apps Challenge 2026."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "cmp-bbox-001",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.15, 9.90],
+            [76.55, 9.90],
+            [76.55, 10.30],
+            [76.15, 10.30],
+            [76.15, 9.90]
+          ]
+        ]
+      },
+      "properties": {
+        "pass_type": "event_peak_comparison",
+        "calibration": "radiometric_terrain_corrected",
+        "coverage_status": "complete_overlap"
+      }
+    }
+  ]
+}

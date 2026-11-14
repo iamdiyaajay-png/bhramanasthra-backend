@@ -1,0 +1,73 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "investigation_id": "INV-2026-KER-002",
+    "layer": "change-mask",
+    "layer_name": "SAR Dual-Pol Amplitude Ratio Thresholded Change Mask",
+    "crs": "EPSG:4326",
+    "bounding_box": [76.15, 9.90, 76.55, 10.30],
+    "phenomenon_type": "flood",
+    "expected_behavior": "receding",
+    "polarization": "VV",
+    "threshold_db": -3.5,
+    "speckle_filter": "Lee",
+    "filter_window": 7,
+    "reference_date": "2018-08-08",
+    "comparison_date": "2018-08-16",
+    "data_source": "Copernicus Sentinel-1 SAR via NASA/ESA Gateway",
+    "data_provenance": "ILLUSTRATIVE — NOT REAL DATA",
+    "scientific_disclaimer": "Demonstration vector change mask for NASA Space Apps Challenge 2026. Awaiting Member 1 scientific pipeline processing."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "change-feat-001",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.22, 10.02],
+            [76.28, 10.04],
+            [76.32, 10.12],
+            [76.29, 10.18],
+            [76.23, 10.15],
+            [76.19, 10.08],
+            [76.22, 10.02]
+          ]
+        ]
+      },
+      "properties": {
+        "feature_id": "PERIYAR-BASIN-INUNDATION-01",
+        "detection_type": "surface_water_inundation",
+        "backscatter_ratio_db": -5.2,
+        "area_sq_km": 8.45,
+        "confidence": "ILLUSTRATIVE"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "change-feat-002",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.35, 10.10],
+            [76.42, 10.15],
+            [76.45, 10.22],
+            [76.39, 10.20],
+            [76.34, 10.14],
+            [76.35, 10.10]
+          ]
+        ]
+      },
+      "properties": {
+        "feature_id": "CHALAKUDY-OVERFLOW-02",
+        "detection_type": "river_basin_overflow",
+        "backscatter_ratio_db": -4.8,
+        "area_sq_km": 6.40,
+        "confidence": "ILLUSTRATIVE"
+      }
+    }
+  ]
+}
+

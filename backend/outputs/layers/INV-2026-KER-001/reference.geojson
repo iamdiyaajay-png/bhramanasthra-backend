@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "investigation_id": "INV-2026-KER-002",
+    "layer": "reference",
+    "layer_name": "Pre-Event Baseline SAR Acquisition (2018-08-08)",
+    "acquisition_id": "S1A_IW_GRDH_1SDV_20180808T004018_20180808T004043_023147_028448_F722",
+    "acquisition_date": "2018-08-08",
+    "mission": "Sentinel-1A",
+    "sensor": "C-SAR",
+    "mode": "IW",
+    "polarization": ["VV", "VH"],
+    "orbit_direction": "DESCENDING",
+    "track": 144,
+    "crs": "EPSG:4326",
+    "bounding_box": [76.15, 9.90, 76.55, 10.30],
+    "mean_vv_db": -9.8,
+    "data_provenance": "ILLUSTRATIVE — NOT REAL DATA",
+    "scientific_disclaimer": "Demonstration baseline observation footprint for NASA Space Apps Challenge 2026."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "ref-bbox-001",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.15, 9.90],
+            [76.55, 9.90],
+            [76.55, 10.30],
+            [76.15, 10.30],
+            [76.15, 9.90]
+          ]
+        ]
+      },
+      "properties": {
+        "pass_type": "pre_event_baseline",
+        "calibration": "radiometric_terrain_corrected",
+        "coverage_status": "complete_overlap"
+      }
+    }
+  ]
+}

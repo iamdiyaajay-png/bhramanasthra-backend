@@ -1,0 +1,84 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "investigation_id": "INV-2026-KER-002",
+    "layer": "continuous",
+    "layer_name": "SAR Continuous Backscatter Difference Layer (Delta dB)",
+    "crs": "EPSG:4326",
+    "bounding_box": [76.15, 9.90, 76.55, 10.30],
+    "unit": "decibels (dB)",
+    "value_range": [-12.4, 4.2],
+    "reference_date": "2018-08-08",
+    "comparison_date": "2018-08-16",
+    "data_provenance": "ILLUSTRATIVE — NOT REAL DATA",
+    "scientific_disclaimer": "Demonstration continuous backscatter differential field for NASA Space Apps Challenge 2026."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "diff-cell-001",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.20, 10.00],
+            [76.30, 10.00],
+            [76.30, 10.10],
+            [76.20, 10.10],
+            [76.20, 10.00]
+          ]
+        ]
+      },
+      "properties": {
+        "grid_id": "G-01",
+        "delta_db": -6.1,
+        "coherence_estimate": 0.28,
+        "signal_state": "severe_backscatter_drop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "diff-cell-002",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.30, 10.10],
+            [76.40, 10.10],
+            [76.40, 10.20],
+            [76.30, 10.20],
+            [76.30, 10.10]
+          ]
+        ]
+      },
+      "properties": {
+        "grid_id": "G-02",
+        "delta_db": -4.3,
+        "coherence_estimate": 0.35,
+        "signal_state": "moderate_backscatter_drop"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "diff-cell-003",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [76.40, 10.20],
+            [76.50, 10.20],
+            [76.50, 10.30],
+            [76.40, 10.30],
+            [76.40, 10.20]
+          ]
+        ]
+      },
+      "properties": {
+        "grid_id": "G-03",
+        "delta_db": 0.8,
+        "coherence_estimate": 0.72,
+        "signal_state": "stable_surface"
+      }
+    }
+  ]
+}

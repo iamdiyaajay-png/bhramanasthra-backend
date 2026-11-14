@@ -1,0 +1,78 @@
+{
+  "investigation_id": "INV-2026-VAL-004",
+  "study_area_id": "valencia-inundation-2024",
+  "study_area_name": "Valencia Coastal Plain (DANA Event)",
+  "bounding_box": [
+    -0.55,
+    39.25,
+    -0.25,
+    39.55
+  ],
+  "crs": "EPSG:4326",
+  "phenomenon_type": "flood",
+  "expected_behavior": "receding",
+  "data_tier": "Tier 1 (Core)",
+  "data_source": "Copernicus Sentinel-1 SAR via NASA/ESA Gateway",
+  "data_provenance": "ILLUSTRATIVE \u2014 NOT REAL DATA",
+  "satellite_mission": "Sentinel-1A",
+  "sensor": "C-SAR",
+  "mode": "IW",
+  "polarization": [
+    "VV",
+    "VH"
+  ],
+  "orbit_direction": "ASCENDING",
+  "track": 37,
+  "reference_acquisition_id": "S1A_IW_GRDH_1SDV_20241023T180215_20241023T180240_056230_06E410_1189",
+  "reference_acquisition_date": "2024-10-23",
+  "comparison_acquisition_id": "S1A_IW_GRDH_1SDV_20241031T180216_20241031T180241_056347_06E801_9A23",
+  "comparison_acquisition_date": "2024-10-31",
+  "later_acquisition_dates": [
+    "2024-11-06",
+    "2024-11-12",
+    "2024-11-18"
+  ],
+  "valid_later_acquisitions_count": 3,
+  "detected_later_acquisitions_count": 0,
+  "excluded_acquisitions": [],
+  "processing_method": "Sentinel-1 Dual-Pol Amplitude Ratio & Coherence Change Detection (SAR Beat Test)",
+  "processing_parameters": {
+    "polarization": "VV",
+    "speckle_filter": "Lee",
+    "filter_window": 7,
+    "detection_threshold_db": -3.5,
+    "beat_test_threshold_percent": 15.0
+  },
+  "change_detection_status": "PENDING",
+  "changed_area_sq_km": null,
+  "layer_references": null,
+  "beat_test_status": "NOT_YET_PROCESSED",
+  "beat_test_result": "NOT_AVAILABLE",
+  "persistence_result": "NOT_AVAILABLE",
+  "confounder_flags": [
+    "CLEAR"
+  ],
+  "evidence_label": "Unverified",
+  "reasons_for_label": [
+    "Investigation created and recorded in Evidence Ledger.",
+    "Awaiting SAR processing pipeline execution from Member 1.",
+    "Beat Test temporal evolution has not yet run on post-event satellite passes.",
+    "Data provenance is strictly disclosed as ILLUSTRATIVE \u2013 NOT REAL DATA."
+  ],
+  "independent_reference": null,
+  "verification_status": "UNVERIFIED",
+  "known_limitations": [
+    "Radar speckle noise requires multi-look adaptive filtering.",
+    "Wind roughening over open water can induce backscatter variance.",
+    "Ground truth validation has not yet been ingested.",
+    "Current demonstration uses illustrative Sentinel-1 metadata."
+  ],
+  "reproduce_command": "python -m bhandmisntra.pipeline --study-area valencia-inundation-2024 --ref 2024-10-23 --cmp 2024-10-31 --track 37 --orbit ASCENDING",
+  "configuration_hash": "cd8e05dafebf20963f27d1b0e0e847886cbe7f9c6db0278953521631e98af025",
+  "environment": {
+    "python_version": "3.12.10",
+    "platform": "BHnMISnTRA-FastAPI-v1.0.0",
+    "engine": "Gemini 3.8 Flash High Architecture"
+  },
+  "created_at": "2026-11-14T10:34:28Z"
+}

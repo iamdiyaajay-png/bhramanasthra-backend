@@ -1,0 +1,156 @@
+# Member 2 Workstream: Backend API & Security Gateway
+
+**Owner**: Member 2 (Backend & Security Lead)  
+**Active Skills**: `security-audit`, `automation-recommender`  
+**Security Mandate**: STRICT Backend Authentication Enforced, ZERO Client-Side API Keys
+
+## Current Focus
+Building the secure Node.js / Express API gateway to broker NASA Open APIs, protect secret credentials, and enforce backend authentication.
+
+## Tasks & Progress
+
+- [x] Security policies defined and locked into project specifications.
+- [x] Local environment security architecture mapped (Zero secrets in frontend bundles).
+- [x] Python 3.12.10 verified and virtual environment (`backend/.venv`) initialized.
+- [x] Core dependencies installed (`fastapi`, `uvicorn`, `pydantic`, `python-multipart`).
+- [x] Phase 3: Basic FastAPI server and health check endpoint verified (`/api/health`).
+- [x] Phase 4: Study area endpoints implemented and verified live:
+  - `GET /api/study-areas` (returns monitored regions with bounding boxes & CRS).
+  - `GET /api/study-areas/{id}/acquisitions` (returns satellite passes, orbit direction, track, and validity).
+  - Standardized error format `{code, message, suggested_action}` implemented and tested.
+  - All mock data strictly disclosed as `ILLUSTRATIVE — NOT REAL DATA`.
+- [x] Phase 5: Investigation Creation, Retrieval & Evidence Ledger implemented and verified live:
+  - `POST /api/investigations` (validates study area, dates, orbit geometry; generates unique ID; initializes Evidence Ledger; persists to JSON).
+  - `GET /api/investigations/{id}` (retrieves full investigation state, satellite metadata, processing status, and traceable Evidence Ledger).
+  - Standardized 422 validation error handler added for missing/malformed payloads.
+  - Tested across 9 test scenarios with 100% PASS rate.
+- [x] Phase 6: Evidence Ledger JSON Storage & Download Operations implemented and verified live:
+  - `GET /api/investigations/{id}/ledger` (retrieves standalone Evidence Ledger JSON with complete Section 13 schema).
+  - `GET /api/investigations/{id}/ledger/download` (downloads the ledger as an attachment file with `Content-Disposition: attachment; filename="evidence-ledger-{id}.json"`).
+  - Cold-start persistent storage verified on disk (`backend/data/investigations.json` and `backend/outputs/ledgers/{id}.json`).
+  - Tested against `INV-2026-KER-002` with 100% PASS rate across all endpoints and regressions.
+- [x] Phase 7: Three-State Evidence Label Logic & Beat Test Temporal Evaluation implemented and verified live:
+  - Strict adherence to PRD Section 9 mathematical rules and persistence thresholds.
+  - Requires at least 3 valid later acquisitions (`valid_count >= 3`).
+  - Implemented persistence rule: change must be detected in at least 2/3 (66.7%) of valid later passes.
+  - Excluded invalid acquisitions from observation counts and documented exclusion reasons.
+  - Three-State Evidence Label Mapping:
+    - `Supported`: Temporal result = 'matches' AND Confounder flag = 'Clear' AND valid_count >= 3.
+    - `Inconclusive`: valid_count >= 3 AND (Temporal result = 'does_not_match' OR Confounder flag = 'Flagged').
+    - `Unverified`: valid_count < 3, or no same-geometry series available.
+  - Endpoints implemented:
+    - `GET /api/investigations/{id}/evaluation` (returns evaluation status, beat test results, persistence ratio, and evidence rationale).
+    - `POST /api/investigations/{id}/evaluate` (evaluates observation passes, updates Evidence Ledger, and persists changes to disk).
+  - Tested across all edge cases (fewer than 3 passes, exact 3 passes, detection < 2/3, flagged confounders, excluded passes) and disk persistence with 100% PASS rate.
+- [x] Phase 8: Layer-Serving Endpoints & Map Assets (`GET /api/investigations/{id}/layers/{layer}`) implemented and verified live:
+  - Supports PRD v3 canonical layers: `change-mask`, `continuous`, `reference`, `comparison` (with aliases).
+  - Serves valid GeoJSON map layers with `Content-Type: application/geo+json` (and supports raster PNG/TIFF formats).
+  - Implemented multi-tier path traversal defense (whitelist validation, traversal sequence blocking, directory confinement check).
+  - Full error handling:
+    - 404 `INVESTIGATION_NOT_FOUND` for unknown investigations.
+    - 400 `UNSUPPORTED_LAYER` / `INVALID_LAYER_NAME` for unsupported layers or traversal sequences.
+    - 404 `LAYER_ASSET_NOT_FOUND` when an asset file is missing on disk.
+  - Manifest catalog endpoint added: `GET /api/investigations/{id}/layers` listing available layers, formats, and endpoints.
+  - Illustrative map assets safely stored in `backend/outputs/layers/{investigation_id}/` strictly labelled `ILLUSTRATIVE — NOT REAL DATA`.
+  - Tested across 8 test suites with 100% PASS rate and zero regressions.
+- [x] Member 2 Task 1: Evidence Ledger Schema Enhancement (PRD Section 4 & 13 Parity):
+  - Added optional fields `independent_reference: Optional[Dict[str, Any]] = None` and `layer_references: Optional[List[str]] = None`.
+  - Full backwards compatibility verified; existing JSON files on disk untouched and preserved.
+  - Tested temporary populated serialization and new investigation creation with 100% PASS rate.
+- [x] Member 2 Task 2: Implement Phase 11 Printable Investigation Report (`GET /api/investigations/{id}/report`):
+  - Pure self-contained HTML report with responsive styling and `@media print` rules.
+  - Interactive "Print / Save as PDF" button calling `window.print()` and hidden during printing.
+  - Pulls dynamic metadata from investigation, ledger, evaluation, and layers services without recalculation.
+  - Comprehensive XSS defense via `html.escape` on all dynamic values.
+  - Prominent disclosure banner for `ILLUSTRATIVE — NOT REAL DATA`.
+  - Tested across 10 test suites (valid report, dynamic data, evaluation match, missing fields fallback, escaping, print CSS, 404 error, idempotency, and Phase 1–8 regressions) with 100% PASS rate.
+- [x] Member 2 Task 3: Backend Authentication on Mutation Endpoints (`POST /api/investigations` and `POST /api/investigations/{id}/evaluate`):
+  - Created `backend/app/dependencies.py` with `APIKeyHeader(name="X-API-Key", auto_error=False)`.
+  - Constant-time secret validation using `secrets.compare_digest`.
+  - Strictly fail-closed: missing or whitespace `BHNMISNTRA_API_KEY` on the server returns HTTP 500 `SERVER_CONFIGURATION_ERROR`.
+  - Missing or invalid client `X-API-Key` returns HTTP 401 `AUTHENTICATION_REQUIRED` matching PRD Section 8 error format.
+  - Zero hardcoded keys or fallback defaults in source code.
+  - Root `.gitignore` created protecting `.env` and `.env.*` while permitting `.env.example`.
+  - Created `backend/.env.example` placeholder template.
+  - Reliable `.env` loading via `python-dotenv` with OS environment variable precedence.
+  - All 11 public `GET` endpoints remain 100% public (zero exposed frontend secrets).
+  - Swagger UI (`/docs`) displays the interactive "Authorize" lock button without exposing any secrets in the OpenAPI schema.
+  - Tested across 8 comprehensive test suites in `scratch/test_task3_auth.py` with 100% PASS rate and zero regressions.
+- [x] Member 2 Task 4: Backend Test Consolidation & Data-Safe Test Suite (`backend/tests/`):
+  - Consolidated all Phase 1–8 and Tasks 1–3 tests under a structured standard library `unittest` suite in `backend/tests/`.
+  - Zero external packages installed (`requirements.txt` preserved).
+  - Built `backend/tests/conftest_base.py` with in-process ASGI 3 dispatcher and automatic temporary directory data sandboxing.
+  - Zero test pollution: `backend/data/` and `backend/outputs/` files are 100% isolated and never modified by tests.
+  - Created dedicated test suites:
+    - `test_phase4_study_areas.py` (Health, Root, Study Area catalog, acquisitions timeline, 404s)
+    - `test_phase5_investigations.py` (Investigation creation, geometry & chronology validation, 400/404/422s)
+    - `test_phase6_ledger.py` (Ledger JSON schema, download attachment headers, Task 1 fields)
+    - `test_phase7_beat_test.py` (Three-state labels, Beat Test math, confounders, exclusions, persistence ratio)
+    - `test_phase8_layers.py` (Canonical layers, GeoJSON format, path traversal prevention, manifest catalog)
+    - `test_task2_report.py` (Printable HTML report, dynamic data, XSS escaping, print CSS)
+    - `test_task3_auth.py` (API-key authentication, fail-closed 500, 401 rejections, zero secrets exposed)
+  - Created `backend/tests/run_all.py` master runner with automated pre- and post-test data footprint checks.
+  - 46 test cases executed with 100% PASS rate and 0 data anomalies.
+- [x] Member 2 Task 5: Backend Security Hardening (SEC-01 through SEC-05):
+  - **SEC-01 (Explicit CORS)**: Replaced wildcard `*` with explicit trusted origins (`localhost:5173`, `localhost:4173`, `localhost:3000`, `localhost:8000`, `127.0.0.1:*`) + `BHNMISNTRA_CORS_ORIGINS` support. Set `allow_credentials=False` (header-based authentication).
+  - **SEC-02 (Global Exception & HTTP Handlers)**: Added `global_exception_handler` (catching unhandled exceptions, logging full traceback internally, and returning standard 500 `INTERNAL_SERVER_ERROR` without stack trace/path leaks) and `http_exception_handler` (standardizing 404, 405, etc. into 3-field PRD Section 8 format).
+  - **SEC-03 (Security Headers Middleware)**: Injected `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`, and report-safe CSP (`default-src 'self'`, `unsafe-inline` styles & scripts for printable report triggers, plus Swagger UI asset support).
+  - **SEC-04 (Dynamic Auth Config)**: Added dynamic `.env` reload fallback in `get_server_api_key()` to prevent stale process errors if keys are configured after startup, while strictly maintaining fail-closed HTTP 500 when unconfigured.
+  - **SEC-05 (Boundary Validation)**: Added `Path(..., pattern=r"^[A-Za-z0-9_-]+$")` boundary validation on `investigation_id` and `study_area_id` across routes, rejecting directory traversal and unsafe characters with HTTP 422 while preserving the HTTP 404 `INVESTIGATION_NOT_FOUND` contract for unknown IDs.
+  - Implemented `backend/tests/test_task5_security.py` (12 test cases).
+  - All 58 consolidated tests passing in 5.2 seconds with 100% data integrity verified.
+- [x] Member 2 Repair 1: Investigation Data Safety and Collision-Proof Unique IDs (Audit Findings 3 & 4):
+  - **Finding 3 (Corrupt JSON Protection & Atomic Writes)**:
+    - Never silently returns `{}` on corrupted `investigations.json`.
+    - Preserves corrupted file in-place and creates timestamped `.corrupt.<timestamp>` backup.
+    - Raises controlled HTTP 500 `DATABASE_CORRUPTION_ERROR`.
+    - Implemented atomic JSON writes via `.tmp.<uuid>` file, flush, `os.fsync`, and `os.replace`.
+  - **Finding 4 (Collision-Proof Unique IDs)**:
+    - Scans existing IDs per study-area slug independently to identify highest allocated index.
+    - Sequence numbers advance from highest existing number (e.g. KER advances from 8 to 9, VAL advances from 4 to 5).
+    - Integrated collision guard (`while investigation_id in db: next_index += 1`).
+    - Added pre-commit collision check raising HTTP 500 `INVESTIGATION_ID_COLLISION` to strictly prevent record overwriting.
+  - Added `backend/tests/test_repair1_data_safety.py` (6 new test cases).
+  - Complete test suite: **64 / 64 tests passing** with 100% data isolation verified.
+- [x] Member 2 Repair 2: Beat Test Scientific Logic & Evaluation Validation (Audit Findings 2 & 5):
+  - **Finding 2 (Beat Test Phenomenon Logic & Expected Behavior)**:
+    - `evaluate_beat_test()` now actively evaluates `expected_behavior` (`receding` vs `sustained`).
+    - Receding floods with 100% persistence across all subsequent passes are rejected with `meets_threshold=False`, `temporal_result="does_not_match"` (yields `Inconclusive`), preventing non-receding floods from being incorrectly labeled `Supported`.
+    - Receding floods with initial change detection ($\ge 2/3$) and documented recession (cleared in later passes) return `matches` and yield `Supported`.
+    - Sustained phenomena (e.g. landslides, ground subsidence) strictly enforce the PRD Section 9 $\ge 2/3$ (66.7%) persistence ratio.
+    - Preserved $\ge 3$ valid acquisitions rule and invalid pass exclusion logic.
+    - Zero invented mathematical curves or synthetic backscatter constants.
+  - **Finding 5 (Evaluation Input Validation & Notes Preservation)**:
+    - **5A (Changed Area Validation)**: Added `ge=0.0` non-negative validation to `EvaluationRequest.changed_area_sq_km`. Negative values rejected with HTTP 422; zero and positive values accepted.
+    - **5B (Observation Validation)**: Observations with date $\le$ `comparison_date` rejected with HTTP 400 `INVALID_OBSERVATION_DATE`. Observations outside study area timeline rejected with HTTP 400 `ACQUISITION_NOT_IN_STUDY_AREA`. Empty observations list rejected with HTTP 400 `EMPTY_OBSERVATIONS_LIST`.
+    - **5C (Notes Preservation)**: Evaluation notes preserved in `investigations.json` and Evidence Ledger `evaluation_notes`. Returned in `EvaluationResponse.notes`, `GET /api/investigations/{id}/evaluation`, and `GET /api/investigations/{id}/ledger`. Subsequent evaluation calls that omit `notes` preserve existing notes without overwriting.
+  - Added `backend/tests/test_repair2_evaluation_validation.py` (12 comprehensive test cases).
+  - Consolidated test suite expanded to **76 / 76 passing tests** with 100% data isolation verified.
+- [x] Member 2 Repair 3: Dependencies and Map Layer Availability (Audit Findings 1, 6 & 8):
+  - **Finding 1 (Missing python-dotenv Dependency)**:
+    - Added explicit `python-dotenv>=1.0.0` to `backend/requirements.txt`.
+    - Verified full compatibility with existing virtual environment (`python-dotenv 1.2.4` installed).
+    - Verified application startup, configuration loading, and health check (`/api/health`) with zero errors.
+  - **Finding 6 (TIFF Layers Support)**:
+    - Updated `CANONICAL_LAYERS` in `backend/app/services/layer_service.py` to include `.tiff` alongside `.tif` in `extensions`.
+    - Verified both `.tif` and `.tiff` return HTTP 200 with `Content-Type: image/tiff`.
+    - Preserved existing `.geojson`, `.json`, and `.png` serving and directory traversal protections.
+  - **Finding 8 (Missing Layer Assets Transparency)**:
+    - Inspected `backend/outputs/layers/`: confirmed authentic assets present for `INV-2026-KER-001` (4/4) and `INV-2026-KER-002` (4/4).
+    - Confirmed pipeline outputs for `INV-2026-VAL-004`, `INV-2026-KER-003`, `INV-2026-KER-005` through `INV-2026-KER-008` have not yet been produced by Member 1's SAR processing pipeline.
+    - Zero synthetic or fake scientific layers fabricated; platform accurately reports unavailable layers as HTTP 404 `LAYER_ASSET_NOT_FOUND` with clear pipeline guidance and manifest `available: False`.
+  - Added `backend/tests/test_repair3_layers_and_deps.py` (9 comprehensive test cases).
+  - Consolidated test suite expanded to **85 / 85 passing tests** with 100% data isolation verified.
+- [x] Member 2 Repair 4: Validation Error Message Cleanup (Audit Finding 7):
+  - **Finding 7 (Double Period Prevention in Validation Errors)**:
+    - Updated `validation_exception_handler()` in `backend/app/schemas/errors.py`.
+    - Added string normalization stripping trailing periods and whitespace (`str(raw_msg).strip().rstrip(".")`) before formatting.
+    - Guarantees validation messages end with exactly one final period (eliminating double periods such as `..`).
+    - Added safe fallback default (`"Invalid request parameters"`) for empty, whitespace, or missing error messages.
+    - Preserved existing PRD Section 8 3-field structure (`code`, `message`, `suggested_action`) and HTTP status 422.
+  - Added `backend/tests/test_repair4_validation_cleanup.py` (6 comprehensive test cases).
+  - Consolidated test suite expanded to **91 / 91 passing tests** with 100% data isolation verified.
+- [ ] Phase 9: Connect Member 1's scientific outputs.
+
+## Blockers & Dependencies
+- Awaiting Member 1 SAR pipeline layer generation for Valencia (`INV-2026-VAL-004`) and Kerala passes (`INV-2026-KER-003` to `KER-008`). Backend layer service is fully prepared to serve `.geojson`, `.tif`, and `.tiff` formats as soon as files are placed in `backend/outputs/layers/<id>/`.
