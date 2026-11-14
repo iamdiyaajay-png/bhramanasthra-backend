@@ -337,3 +337,4 @@ backend\.venv\Scripts\python.exe backend\tests\run_all.py
 ---
 
 *Handoff document prepared and saved to `INTEGRATION_HANDOFF.md`.*
+

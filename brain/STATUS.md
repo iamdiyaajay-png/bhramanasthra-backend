@@ -1,22 +1,25 @@
-# Master Project Status
+# Master Project Status — BHRAMANASTHRA
 
-**Sprint Phase**: Foundation & Multi-Workstream Initialization  
-**Lead AI Engine**: Gemini 3.8 Flash (High)  
-**Security Status**: Enforced (Backend Authentication & Zero Client Keys Policy)
+**Sprint Phase**: Integration & NASA Compliance Locked  
+**Challenge**: NASA Space Apps Challenge 2026: *"Dancing with the SARs"*  
+**Event**: Universal Event (Global Judging Eligible)  
+**Lead AI Engine**: Gemini 3.8 Flash High (Supreme Decision-Maker & Architect)  
+**Security Status**: Enforced (Backend API Key Auth & Zero Client Keys Policy)
 
 ## Current Milestones
 
 | Milestone | Target | Status | Owner |
-|---|---|---|---|
-| M1: Project Environment & Skills Setup | Install & adapt all 14 skills, establish `brain/` | **COMPLETE** | Coordinator |
-| M2: Multi-Workstream Allocation | Allocate RACI & status trackers for 4 members | **COMPLETE** | Team |
-| M3: Architectural Study of Past Projects | Extract lessons from CGPC, GK Quiz, hangout, TechReady | **COMPLETE** | Member 2 & 3 |
-| M4: Core Frontend Mission Dashboard | 3D visualizer, NASA theme, SpaceX design tokens | IN PROGRESS | Member 1 |
-| M5: NASA API Gateway & Backend Auth | Secure proxy, JWT/session auth, zero client secrets | IN PROGRESS | Member 2 |
-| M6: Scientific Data Pipeline | Ingest telemetry, apply Headroom compaction | IN PROGRESS | Member 3 |
-| M7: High-Value Production Pages | 404, 500 error boundary, team credits, onboarding tour | UPCOMING | Member 4 |
-| M8: Verification & Defensive Security Audit | Web design guidelines audit, prompt-gated security review | UPCOMING | Member 4 |
+|---|---|---|:---:|:---:|
+| **M1: Environment & Skills Setup** | Install & adapt skills, establish persistent `brain/` | **COMPLETE** | Team |
+| **M2: Multi-Workstream Allocation** | Allocate RACI & status trackers across 4 members | **COMPLETE** | Team |
+| **M3: Architectural Study** | Extract lessons from past hackathons | **COMPLETE** | Member 2 & 3 |
+| **M4: Core Frontend Dashboard** | 3D visualizer, NASA dark theme, MapLibre layer binding | IN PROGRESS | Member 1 |
+| **M5: Backend & Evidence Ledger** | FastAPI service, atomic JSON, Beat Test, 91/91 tests passing | **COMPLETE** | Member 2 |
+| **M6: Scientific SAR Pipeline** | NASA ASF DAAC integration, NISAR vs Sentinel-1 separation | IN PROGRESS | Member 3 |
+| **M7: Official Compliance & Pitch Deck** | [COMPLIANCE.md](file:///c:/Users/jasmi/OneDrive/Documents/nasa/COMPLIANCE.md), 7-slide deck, AI disclosure, asset rights | **COMPLETE** | Member 4 |
+| **M8: Production Pages Checklist** | 11 production pages (404, 500, credits, onboarding tour) | IN PROGRESS | Member 4 & 1 |
+| **M9: Verification & Security Audit** | Web design guidelines audit, prompt-gated security review | UPCOMING | Member 4 |
 
 ## Immediate Priority
-Activate the 4 member parallel workstreams and establish the core backend proxy and frontend dashboard structure.
+Support Member 1 (Frontend UI) and Member 3 (SAR Pipeline) integration using [INTEGRATION_HANDOFF.md](file:///c:/Users/jasmi/OneDrive/Documents/nasa/INTEGRATION_HANDOFF.md) and [COMPLIANCE.md](file:///c:/Users/jasmi/OneDrive/Documents/nasa/COMPLIANCE.md).
 
