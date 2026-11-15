@@ -75,7 +75,7 @@ async def add_security_headers(request: Request, call_next):
     return response
 
 # 4. Configure Explicit CORS (SEC-01)
-# Trusted development origins for Vite, React, Next.js, and local server
+# Trusted development and production origins
 DEFAULT_CORS_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -85,6 +85,8 @@ DEFAULT_CORS_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "https://bhramanastra.vercel.app",
+    "https://bhramanasthra.vercel.app",
 ]
 
 cors_env = os.getenv("BHNMISNTRA_CORS_ORIGINS", "").strip()
@@ -98,6 +100,7 @@ if cors_env:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
+    allow_origin_regex=r"^https:\/\/.*\.vercel\.app$",
     allow_credentials=False,  # Authentication uses API-key header, not cookies
     allow_methods=["*"],      # Allows GET, POST, OPTIONS, etc.
     allow_headers=["*"],      # Allows X-API-Key, Content-Type, etc.
